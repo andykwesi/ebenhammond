@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.pytest_cache/
+
+artifacts/*
+!artifacts/.gitkeep
+
+logs/*
+!logs/.gitkeep
+
+data/*.csv
+!data/.gitkeep
+

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block page_title %}Single Prediction{% endblock %}
+
+{% block content %}
+<section class="section-heading page-intro">
+  <div>
+    <p class="eyebrow">Manual Scoring</p>
+    <h2>Single Transaction Prediction</h2>
+  </div>
+</section>
+
+<form class="panel form-panel" method="post">
+  <div class="form-header">
+    <div>
+      <h3>Transaction Features</h3>
+      <p class="muted">Enter the PCA-transformed fields from the credit-card dataset schema.</p>
+    </div>
+    <button class="button" type="submit">Score Transaction</button>
+  </div>
+  <div class="feature-grid">
+    {% for column in feature_columns %}
+      <label>
+        <span>{{ column }}</span>
+        <input name="{{ column }}" type="number" step="any" value="{{ form_values[column] }}" required>
+      </label>
+    {% endfor %}
+  </div>
+</form>
+
+{% if result %}
+<section class="result-band {{ 'danger' if result.prediction == 1 else 'safe' }}">
+  <span>Prediction</span>
+  <strong>{{ result.prediction_label }}</strong>
+  <span>Fraud probability: {{ "%.2f"|format(result.fraud_probability * 100) }}%</span>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block page_title %}Monitoring Dashboard{% endblock %}
+
+{% block content %}
+<section class="section-heading page-intro">
+  <div>
+    <p class="eyebrow">Overview</p>
+    <h2>Transaction Risk Summary</h2>
+  </div>
+  <p class="model-chip">Best model: <strong>{{ best_model }}</strong></p>
+</section>
+
+<section class="stat-grid">
+  <article class="stat-card">
+    <span>Total Predictions</span>
+    <strong>{{ summary.total }}</strong>
+    <small>Scored through this prototype</small>
+  </article>
+  <article class="stat-card">
+    <span>Flagged Fraud</span>
+    <strong>{{ summary.fraud }}</strong>
+    <small>Transactions requiring review</small>
+  </article>
+  <article class="stat-card">
+    <span>Legitimate</span>
+    <strong>{{ summary.legitimate }}</strong>
+    <small>Allowed by model output</small>
+  </article>
+  <article class="stat-card">
+    <span>Best Recall</span>
+    <strong>{{ "%.1f"|format(best_metrics.recall * 100) }}%</strong>
+    <small>Fraud capture on test split</small>
+  </article>
+</section>
+
+<section class="dashboard-grid">
+  <article class="panel model-panel">
+    <div class="section-heading compact">
+      <div>
+        <p class="eyebrow">Current Model</p>
+        <h3>{{ best_model }}</h3>
+      </div>
+    </div>
+    <div class="metric-row">
+      <span>Precision <strong>{{ best_metrics.precision }}</strong></span>
+      <span>Recall <strong>{{ best_metrics.recall }}</strong></span>
+      <span>F1-score <strong>{{ best_metrics.f1_score }}</strong></span>
+      <span>PR-AUC <strong>{{ best_metrics.pr_auc }}</strong></span>
+    </div>
+  </article>
+
+  <article class="panel confusion-panel">
+    <p class="eyebrow">Confusion Matrix</p>
+    <div class="confusion-grid">
+      <span><small>TN</small>{{ best_metrics.true_negatives }}</span>
+      <span><small>FP</small>{{ best_metrics.false_positives }}</span>
+      <span><small>FN</small>{{ best_metrics.false_negatives }}</span>
+      <span><small>TP</small>{{ best_metrics.true_positives }}</span>
+    </div>
+  </article>
+</section>
+{% endblock %}

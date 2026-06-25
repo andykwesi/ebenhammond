@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Credit Card Fraud Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand-lockup" href="{{ url_for('dashboard') }}">
+          <span class="brand-mark">CF</span>
+          <span>
+            <strong>FraudLab</strong>
+            <small>ML Detection Console</small>
+          </span>
+        </a>
+
+        <nav class="nav">
+          <a class="{{ 'active' if active_page == 'dashboard' else '' }}" href="{{ url_for('dashboard') }}">
+            <span class="nav-icon">D</span>
+            Dashboard
+          </a>
+          <a class="{{ 'active' if active_page == 'predict' else '' }}" href="{{ url_for('predict') }}">
+            <span class="nav-icon">S</span>
+            Single Prediction
+          </a>
+          <a class="{{ 'active' if active_page == 'batch' else '' }}" href="{{ url_for('batch') }}">
+            <span class="nav-icon">B</span>
+            Batch Prediction
+          </a>
+          <a class="{{ 'active' if active_page == 'metrics' else '' }}" href="{{ url_for('metrics') }}">
+            <span class="nav-icon">M</span>
+            Metrics
+          </a>
+        </nav>
+
+        <form class="train-card" action="{{ url_for('train_models') }}" method="post">
+          <span>Model artifacts</span>
+          <strong>Refresh training results</strong>
+          <button class="button secondary" type="submit">Train Models</button>
+        </form>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Credit Card Fraud Detection</p>
+            <h1>{% block page_title %}Monitoring Dashboard{% endblock %}</h1>
+          </div>
+          <div class="status-pill">
+            <span></span>
+            Local Prototype
+          </div>
+        </header>
+
+        <section class="page">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              <div class="messages">
+                {% for category, message in messages %}
+                  <div class="message {{ category }}">{{ message }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endwith %}
+          {% block content %}{% endblock %}
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

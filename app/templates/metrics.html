@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block page_title %}Model Metrics{% endblock %}
+
+{% block content %}
+<section class="section-heading page-intro">
+  <div>
+    <p class="eyebrow">Evaluation</p>
+    <h2>Model Metrics</h2>
+  </div>
+  <p class="muted">Selected model: <strong>{{ model_name }}</strong></p>
+</section>
+
+<section class="panel table-panel">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Accuracy</th>
+          <th>Precision</th>
+          <th>Recall</th>
+          <th>F1</th>
+          <th>ROC-AUC</th>
+          <th>PR-AUC</th>
+          <th>TN</th>
+          <th>FP</th>
+          <th>FN</th>
+          <th>TP</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for model in metrics.models %}
+          <tr class="{{ 'selected' if model.model_name == metrics.best_model else '' }}">
+            <td>{{ model.model_name }}</td>
+            <td>{{ model.accuracy }}</td>
+            <td>{{ model.precision }}</td>
+            <td>{{ model.recall }}</td>
+            <td>{{ model.f1_score }}</td>
+            <td>{{ model.roc_auc }}</td>
+            <td>{{ model.pr_auc }}</td>
+            <td>{{ model.true_negatives }}</td>
+            <td>{{ model.false_positives }}</td>
+            <td>{{ model.false_negatives }}</td>
+            <td>{{ model.true_positives }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
